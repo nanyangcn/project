@@ -1,11 +1,10 @@
 {
-  "name": "main-application",
+  "name": "project",
   "version": "1.0.0",
-  "description": "Main application",
+  "description": "Project",
   "main": "index.ts",
   "author": "Yang",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "tsc": "tsc",
     "start": "node build/index.js",
