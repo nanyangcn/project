@@ -6,7 +6,10 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - pathType: Prefix
+        path: /
         backend:
-          serviceName: project-svc
-          servicePort: 2345
+          service:
+            name: project-svc
+            port:
+              number: 2345
