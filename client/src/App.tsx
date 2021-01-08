@@ -11,7 +11,7 @@ const App: React.FC = () => {
       <h1>TO-DO-LIST</h1>
       {/* <Picture/> */}
       <div>
-        <img src='http://localhost:3001/picture' alt='Picture' width='600'/>
+        <img src='./picture' alt='Picture' width='600'/>
       </div>
       <CreateListForm />
       <Lists/>
