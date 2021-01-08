@@ -12,7 +12,6 @@ WORKDIR /usr/src/app
 COPY package.json tsconfig.json index.ts ./
 RUN yarn && \
     yarn tsc && \
-    rm -r node_module && \
     mkdir files
 
 CMD yarn start
