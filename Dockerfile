@@ -6,7 +6,7 @@ COPY client/src ./src
 COPY client/public ./public
 RUN yarn && \
     yarn build && \
-    rm -r node_module 
+    rm -r node_modules 
 
 WORKDIR /usr/src/app
 COPY package.json tsconfig.json index.ts ./
