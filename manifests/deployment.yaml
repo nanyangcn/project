@@ -12,6 +12,12 @@ spec:
       labels:
         app: project
     spec:
+      volumes:
+        - name: volume0
+          emptyDir: {}
       containers:
         - name: project
           image: nanyangcn/project
+          volumeMounts:
+          - name: volume0
+            mountPath: /usr/src/app/files
