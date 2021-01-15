@@ -1,15 +1,19 @@
 import express from 'express';
+import "express-async-errors";
+import { ApolloServer } from "apollo-server-express";
 import morgan from 'morgan';
 import fs from 'fs';
 import axios from 'axios';
+
+import middleware from './utils/middleware';
+import schema from './graphql/schema';
 
 const app = express();
 
 app.use(morgan('tiny'));
 app.use(express.json());
-app.use(express.static('./client/build'));
+app.use(express.static('../client/build'));
 
-const PORT = 3001;
 const PATH = '/usr/src/app/files/1200.jpg';
   
 app.get('/picture', (_req, res) => {
@@ -25,6 +29,12 @@ app.get('/picture', (_req, res) => {
   void sendPicture();
 });
 
-app.listen(PORT, () => {
-  console.log(`Server started in port ${PORT}`);
+app.use(middleware.errorhandler);
+
+const server = new ApolloServer({
+  schema,
 });
+
+server.applyMiddleware({ app });
+
+export default app;

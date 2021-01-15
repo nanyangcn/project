@@ -6,7 +6,11 @@ const ListSchema = Yup.object().shape({
     .max(140, 'Length cannot be over 140 characters!'),
 });
 
-const CreateListForm: React.FC = () => {
+interface Props {
+  handleCreateTodoList: (values: { title: string } ) => void
+}
+
+const CreateListForm: React.FC<Props> = ({ handleCreateTodoList }: Props) => {
   return (
     <div>
       <Formik
@@ -14,9 +18,7 @@ const CreateListForm: React.FC = () => {
           title: '',
         }}
         validationSchema={ListSchema}
-        onSubmit={values => {
-          console.log(values);
-        }}
+        onSubmit={(values) => { handleCreateTodoList(values);}}
       >
         {({ errors, touched }) => (
           <Form>
@@ -31,7 +33,7 @@ const CreateListForm: React.FC = () => {
         )}
       </Formik>
     </div>
-  )
+  );
 };
 
 export default CreateListForm;

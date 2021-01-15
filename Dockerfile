@@ -8,7 +8,7 @@ RUN yarn && \
     yarn build && \
     rm -r node_modules 
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/server
 COPY package.json tsconfig.json index.ts ./
 RUN yarn && \
     yarn tsc && \
