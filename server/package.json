@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "tsc": "tsc",
-    "start": "node build/index.js",
+    "start": "node build/src/index.js",
     "dev": "ts-node-dev index.ts",
     "lint": "eslint --ext .ts ."
   },
