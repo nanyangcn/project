@@ -16,8 +16,13 @@ spec:
         - name: volume0
           emptyDir: {}
       containers:
-        - name: project
-          image: nanyangcn/project
+        - name: project-server
+          image: nanyangcn/project-server
+          volumeMounts:
+          - name: volume0
+            mountPath: /usr/src/app/files
+        - name: project-client
+          image: nanyangcn/project-server
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
