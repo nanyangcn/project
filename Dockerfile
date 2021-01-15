@@ -9,7 +9,8 @@ RUN yarn && \
     rm -r node_modules 
 
 WORKDIR /usr/src/app/server
-COPY package.json tsconfig.json index.ts ./
+COPY server/package.json server/tsconfig.json ./
+COPY server/src ./src
 RUN yarn && \
     yarn tsc && \
     mkdir files
