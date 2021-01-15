@@ -22,7 +22,7 @@ spec:
           - name: volume0
             mountPath: /usr/src/app/files
         - name: project-client
-          image: nanyangcn/project-server
+          image: nanyangcn/project-client
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
