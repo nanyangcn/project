@@ -13,7 +13,7 @@ import store from './state/store';
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: 'http://project-server-svc:2345/graphql'
+    uri: './graphql'
   })
 });
 

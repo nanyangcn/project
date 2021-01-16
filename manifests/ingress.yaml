@@ -14,6 +14,13 @@ spec:
             port:
               number: 2345
       - pathType: Prefix
+        path: /picture
+        backend:
+          service:
+            name: project-server-svc
+            port:
+              number: 2345
+      - pathType: Prefix
         path: /
         backend:
           service:
