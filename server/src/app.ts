@@ -1,7 +1,7 @@
 import express from 'express';
 import "express-async-errors";
 import { ApolloServer } from "apollo-server-express";
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import fs from 'fs';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ import schema from './graphql/schema';
 
 const app = express();
 
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 app.use(express.json());
 // app.use(express.static('/usr/src/app/dist'));
 
@@ -33,6 +33,10 @@ app.use(middleware.errorhandler);
 
 const server = new ApolloServer({
   schema,
+  formatError: (err) => {
+    console.error(`CREATE FAIL! ERROR: ${err.message}`);
+    return err;
+  }
 });
 
 server.applyMiddleware({ app });

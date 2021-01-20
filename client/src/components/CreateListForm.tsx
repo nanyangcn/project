@@ -22,11 +22,10 @@ const CreateListForm: React.FC<Props> = ({ handleCreateTodoList }: Props) => {
       >
         {({ errors, touched }) => (
           <Form>
-            <Field name='title'>
-              {errors.title && touched.title
-                ? (<div>{errors.title}</div>)
-                : null}
-            </Field>
+            <Field name='title' />
+            {errors.title && touched.title
+              ? (<div>{errors.title}</div>)
+              : null}
             {' '}
             <button type='submit'>Create TODO</button>
           </Form>

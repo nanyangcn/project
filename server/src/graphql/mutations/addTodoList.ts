@@ -14,7 +14,11 @@ const typeDefs = gql`
 
 const resolvers: IResolvers = {
   Mutation: {
-    addTodoList: (_root, args) => dbTodoList.dbAddOne(args),
+    addTodoList: async (_root, args) => {
+      const response = await dbTodoList.dbAddOne(args);
+      console.log(`CREATE a todolist: ${JSON.stringify(response)}`);
+      return response;
+    },
   }
 };
 
