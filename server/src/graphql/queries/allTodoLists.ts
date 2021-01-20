@@ -1,7 +1,8 @@
 import { gql } from 'apollo-server-express';
 import { IResolvers } from 'graphql-tools';
 
-import todoLists from '../../utils/todoLists';
+// import todoLists from '../../utils/todoLists';
+import dbTodoList from '../../utils/db';
 
 const typeDefs = gql`
   type Query {
@@ -11,7 +12,7 @@ const typeDefs = gql`
 
 const resolvers: IResolvers = {
   Query: {
-    allTodoLists: () => todoLists.getAll(),
+    allTodoLists: () => dbTodoList.dbGetAll(),
   }
 };
 

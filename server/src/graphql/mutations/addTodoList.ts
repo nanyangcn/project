@@ -1,7 +1,8 @@
 import { gql } from 'apollo-server-express';
 import { IResolvers } from 'graphql-tools';
 
-import todoLists from '../../utils/todoLists';
+// import todoLists from '../../utils/todoLists';
+import dbTodoList from '../../utils/db';
 
 const typeDefs = gql`
   type Mutation {
@@ -13,7 +14,7 @@ const typeDefs = gql`
 
 const resolvers: IResolvers = {
   Mutation: {
-    addTodoList: (_root, args) => todoLists.addOne(args),
+    addTodoList: (_root, args) => dbTodoList.dbAddOne(args),
   }
 };
 
