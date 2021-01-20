@@ -17,7 +17,7 @@ const pool = new Pool({
 });
 
 const dbInit = async (): Promise<void> => {
-  await pool.query('CREATE TABLE IF NOT EXISTS todo(id SERIAL PRIMARY KEY, title VARCHAR(140) NOT NULL)');
+  await pool.query('CREATE TABLE IF NOT EXISTS todo (id SERIAL PRIMARY KEY, title VARCHAR(140) NOT NULL)');
 };
 void dbInit();
 
