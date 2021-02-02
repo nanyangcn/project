@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   namespace: project-namespace
@@ -7,24 +7,15 @@ spec:
   rules:
   - http:
       paths:
-      - pathType: Prefix
-        path: /graphql
+      - path: /graphql
         backend:
-          service:
-            name: project-server-svc
-            port:
-              number: 2345
-      - pathType: Prefix
-        path: /picture
+          serviceName: project-server-svc
+          servicePort: 2345
+      - path: /picture
         backend:
-          service:
-            name: project-server-svc
-            port:
-              number: 2345
-      - pathType: Prefix
-        path: /
+          serviceName: project-server-svc
+          servicePort: 2345
+      - path: /
         backend:
-          service:
-            name: project-client-svc
-            port:
-              number: 2348
+          serviceName: project-server-svc
+          servicePort: 2348
