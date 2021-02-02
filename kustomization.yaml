@@ -1,10 +1,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- manifests/db-sealedsecret.yaml
-- manifests/db-statefulset.yaml
-- manifests/client-service.yaml
-- manifests/server-service.yaml
-- manifests/deployment.yaml
-- manifests/ingress.yaml
-- manifests/cronjob.yaml
+  - manifests/db-sealedsecret.yaml
+  - manifests/db-statefulset.yaml
+  - manifests/client-service.yaml
+  - manifests/server-service.yaml
+  - manifests/deployment.yaml
+  - manifests/ingress.yaml
+  - manifests/cronjob.yaml
+images:
+  - name: PROJECT/CRONJOB
+    newName: nanyangcn/project-cronjob
+  - name: PROJECT/SERVER
+    newName: nanyangcn/project-server
+  - name: PROJECT/CLIENT
+    newName: nanyangcn/project-client

@@ -18,7 +18,7 @@ spec:
           emptyDir: {}
       containers:
         - name: project-server
-          image: nanyangcn/project-server
+          image: PROJECT/IMAGE_SERVER
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
@@ -26,7 +26,7 @@ spec:
           - secretRef:
               name: project-db-secret
         - name: project-client
-          image: nanyangcn/project-client
+          image: PROJECT/IMAGE_CLIENT
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
