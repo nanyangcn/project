@@ -35,6 +35,14 @@ jobs:
         docker push "$IMAGE_SERVER"
         docker push "$IMAGE_CLIENT"
         docker push "$IMAGE_CRONJOB"
+    - name: Set up Kustomize
+      run: |-
+        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+        chmod u+x ./kustomize
     - name: Deploy
       run: |-
+        kubectl create namespace ${GITHUB_REF#refs/heads/} || true
+        kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
+        ./kustomize edit set namespace ${GITHUB_REF#refs/heads/}
         kubectl apply -k .
+        kubectl rollout status deployment project-dep
