@@ -33,6 +33,7 @@ app.use(middleware.errorhandler);
 
 const server = new ApolloServer({
   schema,
+  playground: true,
   formatError: (err) => {
     console.error(`CREATE FAIL! ERROR: ${err.message}`);
     return err;
