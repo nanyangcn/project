@@ -12,9 +12,13 @@ const app = express();
 
 // app.use(morgan('tiny'));
 app.use(express.json());
-app.use(express.static('/usr/src/app/build'));
+// app.use(express.static('/usr/src/app/dist'));
 
 const PATH = '/usr/src/app/files/1200.jpg';
+
+app.get('/', (_req, res) => {
+  res.send('health check');
+});
 
 app.get('/picture', (_req, res) => {
   const sendPicture = async () => {

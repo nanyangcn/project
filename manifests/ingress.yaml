@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  namespace: project-namespace
+  namespace: project-master
   name: project-ing
 spec:
   rules:
@@ -17,5 +17,5 @@ spec:
           servicePort: 2345
       - path: /
         backend:
-          serviceName: project-server-svc
-          servicePort: 2345
+          serviceName: project-client-svc
+          servicePort: 2348
