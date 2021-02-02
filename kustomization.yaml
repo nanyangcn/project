@@ -1,9 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- manifests/controller.yaml
-- manifests/db-statefulset.yaml
-- manifests/db-sealedsecret.yaml
 - manifests/client-service.yaml
 - manifests/server-service.yaml
 - manifests/deployment.yaml
