@@ -15,7 +15,11 @@ app.use(express.json());
 // app.use(express.static('/usr/src/app/dist'));
 
 const PATH = '/usr/src/app/files/1200.jpg';
-  
+
+app.get('/', (_req, res) => {
+  res.send('health check');
+})
+
 app.get('/picture', (_req, res) => {
   const sendPicture = async () => {
     if (!fs.existsSync(PATH)) {
@@ -33,7 +37,6 @@ app.use(middleware.errorhandler);
 
 const server = new ApolloServer({
   schema,
-  playground: true,
   formatError: (err) => {
     console.error(`CREATE FAIL! ERROR: ${err.message}`);
     return err;
