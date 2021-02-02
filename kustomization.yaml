@@ -7,4 +7,4 @@ resources:
 - manifests/server-service.yaml
 - manifests/deployment.yaml
 - manifests/ingress.yaml
-- manifests/cronjob.yam
+- manifests/cronjob.yaml
