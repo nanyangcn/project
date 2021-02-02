@@ -1,0 +1,25 @@
+name: delete application
+
+on:
+  delete:
+
+env:
+  GKE_CLUSTER: dwk-cluster
+  GKE_ZONE: europe-north1-a
+
+jobs:
+  build-publish-deploy:
+    name: Delete All
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GKE_SA_KEY }}
+        project_id: ${{ secrets.GKE_PROJECT }}
+    - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+    - name: Delete
+      run: |
+        kubectl delete all --all -n project-${GITHUB_REF#refs/heads/}
+        kubectl delete namespace project-${GITHUB_REF#refs/heads/}

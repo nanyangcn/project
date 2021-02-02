@@ -41,8 +41,8 @@ jobs:
         chmod u+x ./kustomize
     - name: Deploy
       run: |-
-        kubectl create namespace ${GITHUB_REF#refs/heads/} || true
-        kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
-        ./kustomize edit set namespace ${GITHUB_REF#refs/heads/}
+        kubectl create namespace project-${GITHUB_REF#refs/heads/} || true
+        kubectl config set-context --current --namespace=project-${GITHUB_REF#refs/heads/}
+        ./kustomize edit set namespace project-${GITHUB_REF#refs/heads/}
         kubectl apply -k .
         kubectl rollout status deployment project-dep
