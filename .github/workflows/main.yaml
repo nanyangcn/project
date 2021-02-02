@@ -38,6 +38,3 @@ jobs:
     - name: Deploy
       run: |-
         kubectl apply -k .
-        kubectl rollout status deployment $IMAGE_SERVER
-        kubectl rollout status deployment $IMAGE_CLIENT
-        kubectl rollout status deployment $IMAGE_CRONJOB
