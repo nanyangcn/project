@@ -45,6 +45,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: database
+      namespace: project-namespace
     spec: 
       accessModes: ["ReadWriteOnce"]
       # storageClassName: local-path
