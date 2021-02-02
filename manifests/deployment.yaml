@@ -16,12 +16,16 @@ spec:
       volumes:
         - name: volume0
           emptyDir: {}
+        - name: volume1
+          emptyDir: {}
       containers:
         - name: project-server
           image: PROJECT/IMAGE_SERVER
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
+          - name: volume1
+            mountPath: /usr/src/app/build
           envFrom:
           - secretRef:
               name: project-db-secret
@@ -30,3 +34,5 @@ spec:
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
+          - name: volume1
+            mountPath: /usr/src/app/build

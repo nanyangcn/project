@@ -22,5 +22,5 @@ spec:
           servicePort: 2345
       - path: /
         backend:
-          serviceName: project-client-svc
-          servicePort: 2348
+          serviceName: project-server-svc
+          servicePort: 2345
