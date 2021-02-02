@@ -3,11 +3,6 @@ kind: Ingress
 metadata:
   namespace: project-master
   name: project-ing
-  annotations:
-    nginx.org/server-snippets: |
-      location /static/ {
-        root /usr/src/app/build;
-      }
 spec:
   rules:
   - http:

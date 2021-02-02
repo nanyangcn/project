@@ -5,6 +5,7 @@ COPY package.json tsconfig.json ./
 COPY src ./src
 RUN yarn && \
     yarn tsc && \
-    mkdir files
+    mkdir files && \
+    mkdir build
 
 CMD yarn start
