@@ -6,7 +6,6 @@ on:
 env:
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-a
-  IMAGE: project
 
 jobs:
   build-publish-deploy:
@@ -22,17 +21,21 @@ jobs:
     - run: gcloud --quiet auth configure-docker
     - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
     - name: Create image name and tag
-      run: echo "IMAGE_WITH_TAG=gcr.io/${{ secrets.GKE_PROJECT }}/$IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
+      run: |
+        echo "IMAGE_SERVER=gcr.io/${{ secrets.GKE_PROJECT }}/project-server:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
+        echo "IMAGE_CLIENT=gcr.io/${{ secrets.GKE_PROJECT }}/project-client:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
+        echo "IMAGE_CRONJOB=gcr.io/${{ secrets.GKE_PROJECT }}/project-cronjob:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
     - name: Build
-      run: docker build --tag "$IMAGE_WITH_TAG"
+      run: |
+        docker build --tag "$IMAGE_SERVER" ./server
+        docker build --tag "$IMAGE_CLIENT" ./client
+        docker build --tag "$IMAGE_CRONJOB" ./cronjob
     - name: Publish
-      run: docker push "$IMAGE_WITH_TAG"
-    - name: Set up Kustomize
-      run: |-
-        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-        chmod u+x ./kustomize
+      run: |
+        docker push "$IMAGE_SERVER"
+        docker push "$IMAGE_CLIENT"
+        docker push "$IMAGE_CRONJOB"
     - name: Deploy
       run: |-
-        ./kustomize edit set image PROJECT/IMAGE=$IMAGE_WITH_TAG
         kubectl apply -k .
-        kubectl rollout status deployment $IMAGE
+        kubectl rollout status deployment
