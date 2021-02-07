@@ -32,8 +32,18 @@ const dbAddOne = async (newTodoList: TodoList): Promise<TodoList> => {
   return newTodoList;
 };
 
+const dbCheck = async (): Promise<boolean> => {
+  try {
+    await pool.query('SELECT * FROM todo LIMIT 1');
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 export default {
   dbInit,
   dbGetAll,
-  dbAddOne
+  dbAddOne,
+  dbCheck
 };

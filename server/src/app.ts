@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import middleware from './utils/middleware';
 import schema from './graphql/schema';
+import dbTodoList from './utils/db';
 
 const app = express();
 
@@ -18,6 +19,12 @@ const PATH = '/usr/src/app/files/1200.jpg';
 
 app.get('/', (_req, res) => {
   res.send('health check');
+});
+
+app.get('/healthz', (_req, res) => {
+  if (dbTodoList.dbCheck())
+    res.status(200);
+  res.status(500);
 });
 
 app.get('/picture', (_req, res) => {
