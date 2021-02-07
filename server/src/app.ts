@@ -21,8 +21,8 @@ app.get('/', (_req, res) => {
   res.send('health check');
 });
 
-app.get('/healthz', (_req, res) => {
-  if (dbTodoList.dbCheck())
+app.get('/healthz', async (_req, res) => {
+  if (await dbTodoList.dbCheck())
     res.status(200);
   res.status(500);
 });
