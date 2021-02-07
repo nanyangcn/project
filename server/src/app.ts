@@ -23,8 +23,8 @@ app.get('/', (_req, res) => {
 
 app.get('/healthz', async (_req, res) => {
   if (await dbTodoList.dbCheck())
-    res.status(200);
-  res.status(500);
+    res.status(200).end();
+  res.status(500).end();
 });
 
 app.get('/picture', (_req, res) => {
