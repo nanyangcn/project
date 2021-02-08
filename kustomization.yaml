@@ -8,6 +8,7 @@ resources:
   - manifests/deployment.yaml
   - manifests/ingress.yaml
   - manifests/cronjob.yaml
+  - manifests/analysistemplate.yaml
 images:
   - name: PROJECT/CRONJOB
     newName: nanyangcn/project-cronjob
