@@ -2,8 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: project-dep
-  namespace: project-namespace
+  namespace: project-master
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: project
@@ -14,3 +15,45 @@ spec:
       - analysis:
           templates:
           - templateName: cpu-usage-rate
+  template:
+    metadata:
+      labels:
+        app: project
+    spec:
+      volumes:
+        - name: volume0
+          emptyDir: {}
+      containers:
+        - name: project-server
+          image: PROJECT/IMAGE_SERVER
+          resources:
+            limits:
+              cpu: "150m"
+              memory: "300Mi"
+          volumeMounts:
+          - name: volume0
+            mountPath: /usr/src/app/files
+          envFrom:
+          - secretRef:
+              name: project-db-secret
+          readinessProbe:
+            initialDelaySeconds: 10 # Initial delay until the readiness is tested
+            periodSeconds: 5 # How often to test
+            httpGet:
+              path: /healthz
+              port: 3001
+          livenessProbe:
+            initialDelaySeconds: 20 # Initial delay until the liveness is tested
+            periodSeconds: 5 # How often to test
+            httpGet:
+              path: /healthz
+              port: 3001
+        - name: project-client
+          image: PROJECT/IMAGE_CLIENT
+          resources:
+            limits:
+              cpu: "150m"
+              memory: "300Mi"
+          volumeMounts:
+          - name: volume0
+            mountPath: /usr/src/app/files

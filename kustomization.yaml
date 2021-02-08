@@ -5,11 +5,11 @@ resources:
   - manifests/db-statefulset.yaml
   - manifests/client-service.yaml
   - manifests/server-service.yaml
-  - manifests/deployment.yaml
+  # - manifests/deployment.yaml
+  - manifests/rollout.yaml
   - manifests/ingress.yaml
   - manifests/cronjob.yaml
   - manifests/analysistemplate.yaml
-  - manifests/rollout.yaml
 images:
   - name: PROJECT/CRONJOB
     newName: nanyangcn/project-cronjob
