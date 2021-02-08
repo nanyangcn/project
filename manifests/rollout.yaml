@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: project-dep
-  namespace: project-master
+  namespace: project-namespace
 spec:
   replicas: 1
   selector:
@@ -11,10 +11,10 @@ spec:
   strategy:
     canary:
       steps:
-      - setWeight: 50
       - analysis:
           templates:
           - templateName: cpu-usage-rate
+      - setWeight: 100
   template:
     metadata:
       labels:
