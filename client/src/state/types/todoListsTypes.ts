@@ -1,5 +1,7 @@
 export interface TodoList {
+  id?: string;
   title: string;
+  done: boolean;
 }
 
 export type TodoListsAction =
@@ -10,4 +12,8 @@ export type TodoListsAction =
   | {
     type: 'INITIALIZE';
     data: TodoList[];
+  }
+  | {
+    type: 'UPDATE';
+    data: TodoList;
   }

@@ -5,7 +5,7 @@ import { IResolvers } from 'graphql-tools';
 import dbTodoList from '../../utils/db';
 
 const typeDefs = gql`
-  type Query {
+  extend type Query {
     allTodoLists: [TodoList!]!
   }
 `;

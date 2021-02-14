@@ -5,11 +5,13 @@ import { useMutation, useQuery } from '@apollo/client';
 
 import './App.css';
 
-import { initializeTodolists, createTodoList } from './state/actions/todoListsActions';
+import { initializeTodolists, createTodoList, updateTodoList } from './state/actions/todoListsActions';
 import CreateListForm from './components/CreateListForm';
 import Lists from './components/Lists';
 import { GET_TODOLISTS } from './graphql/queries/allTodoLists';
 import { CREATE_TODOLIST } from './graphql/mutations/addTodoList';
+import { UPDATE_TODOLIST } from './graphql/mutations/editTodoList';
+import { TodoList } from './state/types/todoListsTypes';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,9 +27,19 @@ const App: React.FC = () => {
     onError: (err) => console.log(err),
   });
 
-  const handleCreateTodoList = (values: { title: string }): void => {
+  const [updateList] = useMutation(UPDATE_TODOLIST, {
+    refetchQueries: [{ query: GET_TODOLISTS }],
+    onError: (err) => console.log(err),
+  });
+
+  const handleCreateTodoList = (values: TodoList): void => {
     createList({ variables: values });
     dispatch(createTodoList(values));
+  };
+
+  const handleUpdateTodoList = (values: TodoList): void => {
+    updateList({ variables: values });
+    dispatch(updateTodoList(values));
   };
 
   return (
@@ -37,7 +49,7 @@ const App: React.FC = () => {
         <img src='./picture' alt='Picture' width='600' />
       </div>
       <CreateListForm handleCreateTodoList={handleCreateTodoList}/>
-      <Lists />
+      <Lists handleUpdateTodoList={handleUpdateTodoList}/>
     </div>
   );
 };

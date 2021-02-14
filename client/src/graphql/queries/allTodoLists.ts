@@ -5,6 +5,7 @@ import { TODOLIST_DETAILS } from '../fragments/todoList';
 export const GET_TODOLISTS = gql`
   query getTodoLists{
     allTodoLists{
+      id
       ...TodoListDetails
     }
   }

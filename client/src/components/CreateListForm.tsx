@@ -1,13 +1,15 @@
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
+import { TodoList } from '../state/types/todoListsTypes';
+
 const ListSchema = Yup.object().shape({
   title: Yup.string()
     .max(140, 'Length cannot be over 140 characters!'),
 });
 
 interface Props {
-  handleCreateTodoList: (values: { title: string } ) => void
+  handleCreateTodoList: ( values: TodoList ) => void
 }
 
 const CreateListForm: React.FC<Props> = ({ handleCreateTodoList }: Props) => {
@@ -18,7 +20,7 @@ const CreateListForm: React.FC<Props> = ({ handleCreateTodoList }: Props) => {
           title: '',
         }}
         validationSchema={ListSchema}
-        onSubmit={(values) => { handleCreateTodoList(values);}}
+        onSubmit={(values) => { handleCreateTodoList({ ...values, done: false });}}
       >
         {({ errors, touched }) => (
           <Form>

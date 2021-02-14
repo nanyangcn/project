@@ -1,7 +1,9 @@
 import { TodoList } from './todoLists';
 
 export const isTodoList = (row: TodoList): row is TodoList => {
-  return typeof row.title === 'string';
+  return (
+    typeof row.title === 'string' &&
+    typeof row.done === 'boolean');
 };
 
 export const isTodoLists = (rows: TodoList[]): rows is TodoList[] => {

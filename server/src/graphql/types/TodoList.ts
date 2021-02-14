@@ -3,7 +3,9 @@ import { IResolvers } from 'graphql-tools';
 
 const typeDefs = gql`
   type TodoList {
+    id: ID!
     title: String!
+    done: Boolean!
   }
 `;
 

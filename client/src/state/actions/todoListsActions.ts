@@ -13,3 +13,10 @@ export const createTodoList = (todoList: TodoList) => {
     data: todoList,
   };
 };
+
+export const updateTodoList = (todoList: TodoList) => {
+  return {
+    type: 'UPDATE',
+    data: todoList,
+  };
+};

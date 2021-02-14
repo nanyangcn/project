@@ -21,6 +21,7 @@ app.get('/', (_req, res) => {
   res.send('health check');
 });
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.get('/healthz', async (_req, res) => {
   if (await dbTodoList.dbCheck())
     res.status(200).end();
@@ -45,7 +46,7 @@ app.use(middleware.errorhandler);
 const server = new ApolloServer({
   schema,
   formatError: (err) => {
-    console.error(`CREATE FAIL! ERROR: ${err.message}`);
+    console.error(`ERROR: ${err.message}`);
     return err;
   }
 });

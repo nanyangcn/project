@@ -5,7 +5,7 @@ resources:
   - manifests/db-statefulset.yaml
   - manifests/client-service.yaml
   - manifests/server-service.yaml
-  # - manifests/deployment.yaml
+  - manifests/deployment.yaml
   - manifests/rollout.yaml
   - manifests/ingress.yaml
   - manifests/cronjob.yaml

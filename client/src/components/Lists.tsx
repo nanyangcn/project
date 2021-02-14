@@ -1,8 +1,13 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../state/types';
+import { TodoList } from '../state/types/todoListsTypes';
 
-const Lists: React.FC = () => {
+interface Props {
+  handleUpdateTodoList: ( values: TodoList ) => void
+}
+
+const Lists: React.FC<Props> = ({ handleUpdateTodoList }: Props) => {
   const todoLists = useSelector((state: RootState) => state.todoLists);
 
   if  (!todoLists)
@@ -10,9 +15,14 @@ const Lists: React.FC = () => {
 
   return (
     <div>
-      <ul>
-        {todoLists.map((todolist, i) => (<li key={i}>{todolist.title}</li>))}
-      </ul>
+      {todoLists.map((todoList) => (
+        <div key={todoList.id}>
+          <input type="checkbox" checked={todoList.done} onChange={() => {
+            handleUpdateTodoList({ ...todoList, done: !todoList.done });
+          }}/>
+          <label>{todoList.title}</label>
+        </div>
+      ))}
     </div>
   );
 };
