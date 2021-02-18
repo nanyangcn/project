@@ -12,7 +12,8 @@ import nats from './utils/nats';
 
 const natsConnect = async () => {
   try {
-    await nats.connect();    
+    await nats.connect();   
+    console.log('Conneted to NATS server');
   } catch (err) {
     console.error('Error on connecting to NATS!');
   };

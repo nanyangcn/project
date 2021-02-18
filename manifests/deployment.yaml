@@ -21,7 +21,7 @@ spec:
           image: PROJECT/IMAGE_SERVER
           resources:
             limits:
-              cpu: "150m"
+              cpu: "50m"
               memory: "300Mi"
           volumeMounts:
           - name: volume0
@@ -45,7 +45,7 @@ spec:
           image: PROJECT/IMAGE_CLIENT
           resources:
             limits:
-              cpu: "150m"
+              cpu: "50m"
               memory: "300Mi"
           volumeMounts:
           - name: volume0
