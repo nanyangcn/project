@@ -9,7 +9,7 @@ const CHAT_ID = config.CHAT_ID;
 const msgTitle = '<b>Todos NATS broadcaster</b>';
 const msgFoot = 'broadcasted by <code>r</code> @ <code>p</code>';
 
-const sendMessage = async (msgBody: Msg) => {
+const sendMessage = async (msgBody: string) => {
   const message = `${msgTitle}${msgBody}${msgFoot}`;
   try {
     await axios.get(`${TELEGRAM_URL}/sendMessage?chat_id=${CHAT_ID}&parse_mode=HTML&text=${message}`);
