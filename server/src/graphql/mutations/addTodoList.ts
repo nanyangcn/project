@@ -20,7 +20,8 @@ const resolvers: IResolvers = {
     addTodoList: async (_root, args: TodoList): Promise<TodoList> => {
       const response = await dbTodoList.dbAddOne(args);
       console.log(`CREATE a todolist: ${JSON.stringify(response)}`);
-      nats.publish('created');
+      const message = nats.messageGenerator(args, 'created');
+      nats.publish(message);
       return response;
     },
   }
