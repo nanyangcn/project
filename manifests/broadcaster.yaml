@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: project-namespace
+  name: project-broadcaster
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: project
+  template:
+    metadata:
+      labels:
+        app: project
+    spec:
+      containers:
+        - name: project-broadcaster
+          image: PROJECT/IMAGE_BROADCASTER
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "300Mi"
+          envFrom:
+          - secretRef:
+              name: project-db-secret

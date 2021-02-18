@@ -6,6 +6,7 @@ resources:
   - manifests/client-service.yaml
   - manifests/server-service.yaml
   # - manifests/deployment.yaml
+  - manifests/broadcaster.yaml
   - manifests/rollout.yaml
   - manifests/ingress.yaml
   - manifests/cronjob.yaml
@@ -17,3 +18,5 @@ images:
     newName: nanyangcn/project-server
   - name: PROJECT/CLIENT
     newName: nanyangcn/project-client
+  - name: PROJECT/BROADCASTER
+    newName: nanyangcn/project-broadcaster

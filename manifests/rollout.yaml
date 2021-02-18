@@ -57,12 +57,3 @@ spec:
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
-        - name: project-broadcaster
-          image: PROJECT/IMAGE_BROADCASTER
-          resources:
-            limits:
-              cpu: "50m"
-              memory: "300Mi"
-          envFrom:
-          - secretRef:
-              name: project-db-secret
