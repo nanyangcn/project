@@ -1,19 +1,19 @@
-import { NatsError, Msg } from 'nats';
+import { connect, NatsError, Msg } from 'nats';
 
 import message from './utils/message';
-import nats from './utils/nats';
 
-const natsConnect = async () => {
-  try {
-    await nats.init();   
-    console.log('Conneted to NATS server');
-  } catch (err) {
-    console.error('Error on connecting to NATS!');
-  };
+// const sc = StringCodec();
+
+const main = async () => {
+  const nc = await connect({ servers: 'my-nats:4222' });
+  console.log('Connected to NATS server');
+
+  nc.subscribe('todo', {
+    callback: (err: NatsError | null, msg: Msg) => {
+      if (err) throw err;
+      message.sendMessage(msg);
+    },
+  });
 };
-void natsConnect();
 
-nats.subscribe((err: NatsError | null, msg: Msg) => {
-  if (err) throw err;
-  message.sendMessage(msg);
-});
+void main();
