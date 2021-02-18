@@ -47,6 +47,6 @@ jobs:
         kubectl create namespace project-${GITHUB_REF#refs/heads/} || true
         kubectl config set-context --current --namespace=project-${GITHUB_REF#refs/heads/}
         ./kustomize edit set namespace project-${GITHUB_REF#refs/heads/}
-        ./kustomize edit set image PROJECT/IMAGE_SERVER=$IMAGE_SERVER PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT PROJECT/CRONJOB=$IMAGE_CRONJOB PROJECT/BROADCASTER=$IMAGE_BROADCASTER
+        ./kustomize edit set image PROJECT/BROADCASTER=$IMAGE_BROADCASTER PROJECT/IMAGE_SERVER=$IMAGE_SERVER PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT PROJECT/CRONJOB=$IMAGE_CRONJOB
         kubectl apply -k .
         kubectl rollout status deployment project-broadcaster
