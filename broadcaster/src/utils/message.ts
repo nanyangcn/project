@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Msg } from 'nats';
 
 import config from './config';
 
