@@ -1,11 +1,11 @@
-import ns from 'nats';
+import { connect, StringCodec, NatsConnection } from 'nats';
 
-const sc = ns.StringCodec();
+const sc = StringCodec();
 
-let nc: ns.NatsConnection;
+let nc: NatsConnection;
 
-const connect = async () => {
-  nc = await ns.connect({
+const init = async () => {
+  nc = await connect({
     servers: 'my-nats:4222',
   });
   return nc;
@@ -20,7 +20,7 @@ const close = async() => {
 };
 
 export default {
-  connect,
+  init,
   publish,
   close
 };
