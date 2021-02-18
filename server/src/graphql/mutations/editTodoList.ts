@@ -21,7 +21,7 @@ const resolvers: IResolvers = {
     editTodoList: async (_root, args: TodoList): Promise<TodoList> => {
       const response = await dbTodoList.dbEditDone(args);
       console.log(`PUT a todolist: ${JSON.stringify(response)}`);
-      nats.publish('created');
+      nats.publish('modified');
       return response;
     },
   }
