@@ -4,6 +4,7 @@ import { IResolvers } from 'graphql-tools';
 // import todoLists from '../../utils/todoLists';
 import dbTodoList from '../../utils/db';
 import { TodoList } from '../../utils/todoLists';
+import nats from '../../utils/nats';
 
 const typeDefs = gql`
   extend type Mutation {
@@ -20,6 +21,7 @@ const resolvers: IResolvers = {
     editTodoList: async (_root, args: TodoList): Promise<TodoList> => {
       const response = await dbTodoList.dbEditDone(args);
       console.log(`PUT a todolist: ${JSON.stringify(response)}`);
+      nats.publish('created');
       return response;
     },
   }

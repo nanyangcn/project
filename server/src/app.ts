@@ -8,6 +8,16 @@ import axios from 'axios';
 import middleware from './utils/middleware';
 import schema from './graphql/schema';
 import dbTodoList from './utils/db';
+import nats from './utils/nats';
+
+const natsConnect = async () => {
+  try {
+    await nats.connect();    
+  } catch (err) {
+    console.error('Error on connecting to NATS!');
+  };
+};
+void natsConnect();
 
 const app = express();
 
