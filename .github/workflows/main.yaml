@@ -49,4 +49,4 @@ jobs:
         ./kustomize edit set namespace project-${GITHUB_REF#refs/heads/}
         ./kustomize edit set image PROJECT/IMAGE_SERVER=$IMAGE_SERVER PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT PROJECT/CRONJOB=$IMAGE_CRONJOB PROJECT/BROADCASTER=$IMAGE_BROADCASTER
         kubectl apply -k .
-        kubectl rollout status deployment project-dep
+        kubectl rollout status deployment project-broadcaster
