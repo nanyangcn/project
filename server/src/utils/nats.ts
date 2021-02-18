@@ -1,4 +1,5 @@
 import { connect, StringCodec, NatsConnection } from 'nats';
+import { TodoList } from './todoLists';
 
 const sc = StringCodec();
 
@@ -19,8 +20,15 @@ const close = async() => {
   await nc.drain();
 };
 
+const messageGenerator = (object: TodoList, state: string) => {
+  const message_state = `A task was <i>${state}</i>: `;
+  const message = `<code>${JSON.stringify(object, null, '\t')}</code>`;
+  return `\n\n${message_state}\n\n${message}\n\n`;
+};
+
 export default {
   init,
   publish,
-  close
+  close,
+  messageGenerator
 };
