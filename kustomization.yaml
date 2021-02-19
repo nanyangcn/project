@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+# - manifests/deployment.yaml
 resources:
 - manifests/db-sealedsecret.yaml
-# - manifests/deployment.yaml
 - manifests/db-statefulset.yaml
 - manifests/client-service.yaml
 - manifests/server-service.yaml
@@ -18,16 +18,16 @@ images:
   newName: nanyangcn/project-client
 - name: PROJECT/CRONJOB
   newName: gcr.io/dwk-gke-2021/project-cronjob
-  newTag: master-577547e2faa520899e4cbcda3e6797b4b952fbf0
+  newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
 - name: PROJECT/IMAGE_BROADCASTER
   newName: gcr.io/dwk-gke-2021/project-broadcaster
-  newTag: master-577547e2faa520899e4cbcda3e6797b4b952fbf0
+  newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
 - name: PROJECT/IMAGE_CLIENT
   newName: gcr.io/dwk-gke-2021/project-client
-  newTag: master-577547e2faa520899e4cbcda3e6797b4b952fbf0
+  newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
 - name: PROJECT/IMAGE_SERVER
   newName: gcr.io/dwk-gke-2021/project-server
-  newTag: master-577547e2faa520899e4cbcda3e6797b4b952fbf0
+  newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
 - name: PROJECT/SERVER
   newName: nanyangcn/project-server
 namespace: project-master
