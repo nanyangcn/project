@@ -48,5 +48,12 @@ jobs:
         kubectl config set-context --current --namespace=project-${GITHUB_REF#refs/heads/}
         ./kustomize edit set namespace project-${GITHUB_REF#refs/heads/}
         ./kustomize edit set image PROJECT/IMAGE_BROADCASTER=$IMAGE_BROADCASTER PROJECT/IMAGE_SERVER=$IMAGE_SERVER PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT PROJECT/CRONJOB=$IMAGE_CRONJOB
-        kubectl apply -k .
-        kubectl rollout status deployment project-broadcaster
+      # kubectl apply -k .
+      # kubectl rollout status deployment project-broadcaster
+    - name: Commit and push
+      uses: EndBug/add-and-commit@v5
+      with:
+        add: './kustomization.yaml'
+        message: New version release for gitops-app ${{ github.sha }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
