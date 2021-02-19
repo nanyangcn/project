@@ -1,22 +1,33 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - manifests/db-sealedsecret.yaml
-  - manifests/db-statefulset.yaml
-  - manifests/client-service.yaml
-  - manifests/server-service.yaml
   # - manifests/deployment.yaml
-  - manifests/broadcaster.yaml
-  - manifests/rollout.yaml
-  - manifests/ingress.yaml
-  - manifests/cronjob.yaml
-  - manifests/analysistemplate.yaml
+resources:
+- manifests/db-sealedsecret.yaml
+- manifests/db-statefulset.yaml
+- manifests/client-service.yaml
+- manifests/server-service.yaml
+- manifests/broadcaster.yaml
+- manifests/rollout.yaml
+- manifests/ingress.yaml
+- manifests/cronjob.yaml
+- manifests/analysistemplate.yaml
 images:
-  - name: PROJECT/CRONJOB
-    newName: nanyangcn/project-cronjob
-  - name: PROJECT/SERVER
-    newName: nanyangcn/project-server
-  - name: PROJECT/CLIENT
-    newName: nanyangcn/project-client
-  - name: PROJECT/BROADCASTER
-    newName: nanyangcn/project-broadcaster
+- name: PROJECT/BROADCASTER
+  newName: nanyangcn/project-broadcaster
+- name: PROJECT/CLIENT
+  newName: nanyangcn/project-client
+- name: PROJECT/CRONJOB
+  newName: gcr.io/dwk-gke-2021/project-cronjob
+  newTag: master-c67f1e21dc6368a90b5042d2c61d7daf9cb8ba34
+- name: PROJECT/IMAGE_BROADCASTER
+  newName: gcr.io/dwk-gke-2021/project-broadcaster
+  newTag: master-c67f1e21dc6368a90b5042d2c61d7daf9cb8ba34
+- name: PROJECT/IMAGE_CLIENT
+  newName: gcr.io/dwk-gke-2021/project-client
+  newTag: master-c67f1e21dc6368a90b5042d2c61d7daf9cb8ba34
+- name: PROJECT/IMAGE_SERVER
+  newName: gcr.io/dwk-gke-2021/project-server
+  newTag: master-c67f1e21dc6368a90b5042d2c61d7daf9cb8ba34
+- name: PROJECT/SERVER
+  newName: nanyangcn/project-server
+namespace: project-master
