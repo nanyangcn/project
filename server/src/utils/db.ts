@@ -23,7 +23,6 @@ void dbInit();
 
 const dbGetAll = async (): Promise<TodoList[]> => {
   const response = await pool.query('SELECT * FROM todo ORDER BY id ASC');
-  console.log(response.rows);
   return parseRows(response.rows);
 };
 
