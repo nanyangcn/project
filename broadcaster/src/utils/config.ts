@@ -14,9 +14,15 @@ if (TELEGRAM_TOKEN === '') {
   console.log('Error: please define your CHAT_ID');
 };
 
+const MY_POD_NAME = process.env.MY_POD_NAME || '';
+if (MY_POD_NAME === '') {
+  console.log('Error: please define your MY_POD_NAME');
+};
+
 export default {
   PORT,
   TELEGRAM_TOKEN,
   TELEGRAM_URL,
-  CHAT_ID
+  CHAT_ID,
+  MY_POD_NAME
 };

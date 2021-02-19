@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: project-namespace
-  name: project-broadcaster
+  name: project-broadcaster-dep
 spec:
   replicas: 1 
   selector:
@@ -23,3 +23,8 @@ spec:
           envFrom:
           - secretRef:
               name: project-db-secret
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
