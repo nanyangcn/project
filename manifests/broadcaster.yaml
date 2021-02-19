@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: project-namespace
+  namespace: project-master
   name: project-broadcaster-dep
 spec:
   replicas: 6 

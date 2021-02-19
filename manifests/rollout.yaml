@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: project-dep
-  namespace: project-namespace
+  namespace: project-master
 spec:
   replicas: 1
   selector:
