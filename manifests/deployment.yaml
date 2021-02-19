@@ -21,8 +21,8 @@ spec:
           image: PROJECT/IMAGE_SERVER
           resources:
             limits:
-              cpu: "100m"
-              memory: "300Mi"
+              cpu: "50m"
+              memory: "100Mi"
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
@@ -45,8 +45,8 @@ spec:
           image: PROJECT/IMAGE_CLIENT
           resources:
             limits:
-              cpu: "100m"
-              memory: "300Mi"
+              cpu: "50m"
+              memory: "100Mi"
           volumeMounts:
           - name: volume0
             mountPath: /usr/src/app/files
@@ -54,8 +54,8 @@ spec:
           image: PROJECT/IMAGE_BROADCASTER
           resources:
             limits:
-              cpu: "50m"
-              memory: "300Mi"
+              cpu: "30m"
+              memory: "50Mi"
           envFrom:
           - secretRef:
               name: project-db-secret
