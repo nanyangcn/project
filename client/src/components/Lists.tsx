@@ -20,7 +20,11 @@ const Lists: React.FC<Props> = ({ handleUpdateTodoList }: Props) => {
           <input type="checkbox" checked={todoList.done} onChange={() => {
             handleUpdateTodoList({ ...todoList, done: !todoList.done });
           }}/>
-          <label>{todoList.title}</label>
+          <label>
+            {todoList.done
+              ? <del>{todoList.title}</del>
+              : todoList.title}
+          </label>
         </div>
       ))}
     </div>
