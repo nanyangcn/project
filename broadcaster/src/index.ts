@@ -13,6 +13,7 @@ const main = async () => {
       if (err) throw err;
       message.sendMessage(sc.decode(msg.data));
     },
+    queue: 'todo',
   });
 };
 
