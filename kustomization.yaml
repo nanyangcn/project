@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - manifests/db-sealedsecret.yaml
 # - manifests/deployment.yaml
-# - manifests/db-statefulset.yaml
+- manifests/db-statefulset.yaml
 - manifests/client-service.yaml
 - manifests/server-service.yaml
 - manifests/broadcaster.yaml
