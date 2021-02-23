@@ -3,17 +3,19 @@ name: Release application
 on:
   push:
 
+env:
+  IMAGE_SERVER: ${{ secrets.DOCKERHUB_USERNAME }}/project-server:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+  IMAGE_BROADCASTER: ${{ secrets.DOCKERHUB_USERNAME }}/project-broadcaster:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+  IMAGE_CLIENT: ${{ secrets.DOCKERHUB_USERNAME }}/project-client:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+  IMAGE_CRONJOB: ${{ secrets.DOCKERHUB_USERNAME }}/project-cronjob:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+
 jobs:
   build-1:
-    name: Server, Broadcaster - Build, Publish
+    name: Server - Build, Publish
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Create image name and tag
-      run: |
-        echo "IMAGE_SERVER=${{ secrets.DOCKERHUB_USERNAME }}/project-server:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
-        echo "IMAGE_BROADCASTER=${{ secrets.DOCKERHUB_USERNAME }}/project-broadcaster:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     - name: Set up Docker Buildx
@@ -30,23 +32,34 @@ jobs:
         file: ./server/Dockerfile
         push: true
         tags: ${{ env.IMAGE_SERVER }}
+  build-2:
+    name: Broadcaster - Build, Publish
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Broadcaster - Build and push
       uses: docker/build-push-action@v2
       with:
         context: ./broadcaster
         file: ./broadcaster/Dockerfile
         push: true
-        tags: ${{ env.IMAGE_BROADCASTER }}
-  build-2:
-    name: Client, Cronjob - Build, Publish
+        tags: ${{ env.IMAGE_BROADCASTER }}    
+  build-3:
+    name: Client - Build, Publish
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Create image name and tag
-      run: |
-        echo "IMAGE_CLIENT=${{ secrets.DOCKERHUB_USERNAME }}/project-client:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
-        echo "IMAGE_CRONJOB=${{ secrets.DOCKERHUB_USERNAME }}/project-cronjob:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     - name: Set up Docker Buildx
@@ -63,6 +76,21 @@ jobs:
         file: ./client/Dockerfile
         push: true
         tags: ${{ env.IMAGE_CLIENT }}
+  build-4:
+    name: Cronjob - Build, Publish
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Cronjob - Build and push
       uses: docker/build-push-action@v2
       with:
@@ -73,7 +101,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: [build-1, build-2]
+    needs: [build-1, build-2, build-3, build-4]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -84,10 +112,6 @@ jobs:
     - name: Deploy
       run: |-
         ./kustomize edit set namespace project-${GITHUB_REF#refs/heads/}
-        echo "$IMAGE_BROADCASTER"
-        echo "$IMAGE_SERVER"
-        echo "$IMAGE_CLIENT"
-        echo "$IMAGE_CRONJOB"
         ./kustomize edit set image PROJECT/IMAGE_BROADCASTER=$IMAGE_BROADCASTER PROJECT/IMAGE_SERVER=$IMAGE_SERVER PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT PROJECT/IMAGE_CRONJOB=$IMAGE_CRONJOB
     - name: Commit and push
       uses: EndBug/add-and-commit@v5
