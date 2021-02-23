@@ -14,14 +14,14 @@ resources:
 images:
 - name: PROJECT/IMAGE_BROADCASTER
   newName: nanyangcn/project-broadcaster
-  newTag: master-43abb6d6ce54f83f0eefef688292d0b5c15788d2
+  newTag: master-c36478f911ae313d5963ba68f0f686c65b3f8bb2
 - name: PROJECT/IMAGE_CLIENT
-  newName: gcr.io/dwk-gke-2021/project-client
-  newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
+  newName: nanyangcn/project-client
+  newTag: master-c36478f911ae313d5963ba68f0f686c65b3f8bb2
 - name: PROJECT/IMAGE_CRONJOB
-  newName: gcr.io/dwk-gke-2021/project-cronjob
-  newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
+  newName: nanyangcn/project-cronjob
+  newTag: master-c36478f911ae313d5963ba68f0f686c65b3f8bb2
 - name: PROJECT/IMAGE_SERVER
-  newName: gcr.io/dwk-gke-2021/project-server
-  newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
+  newName: nanyangcn/project-server
+  newTag: master-c36478f911ae313d5963ba68f0f686c65b3f8bb2
 namespace: project-master
