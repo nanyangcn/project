@@ -26,7 +26,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Server - Build and push
-      id: docker_build
       uses: docker/build-push-action@v2
       with:
         context: ./server
@@ -34,7 +33,6 @@ jobs:
         push: true
         tags: ${{ env.IMAGE_SERVER }}
     - name: Client - Build and push
-      id: docker_build
       uses: docker/build-push-action@v2
       with:
         context: ./client
@@ -42,7 +40,6 @@ jobs:
         push: true
         tags: ${{ env.IMAGE_CLIENT }}
     - name: Cronjob - Build and push
-      id: docker_build
       uses: docker/build-push-action@v2
       with:
         context: ./cronjob
@@ -50,7 +47,6 @@ jobs:
         push: true
         tags: ${{ env.IMAGE_CRONJOB }}
     - name: Broadcaster - Build and push
-      id: docker_build
       uses: docker/build-push-action@v2
       with:
         context: ./broadcaster
