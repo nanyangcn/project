@@ -32,7 +32,7 @@ jobs:
         context: ./server
         file: ./server/Dockerfile
         push: true
-        tags: ${{ IMAGE_SERVER }}
+        tags: ${{ env.IMAGE_SERVER }}
     - name: Client - Build and push
       id: docker_build
       uses: docker/build-push-action@v2
@@ -40,7 +40,7 @@ jobs:
         context: ./client
         file: ./client/Dockerfile
         push: true
-        tags: ${{ IMAGE_CLIENT }}
+        tags: ${{ env.IMAGE_CLIENT }}
     - name: Cronjob - Build and push
       id: docker_build
       uses: docker/build-push-action@v2
@@ -48,7 +48,7 @@ jobs:
         context: ./cronjob
         file: ./cronjob/Dockerfile
         push: true
-        tags: ${{ IMAGE_CRONJOB }}
+        tags: ${{ env.IMAGE_CRONJOB }}
     - name: Broadcaster - Build and push
       id: docker_build
       uses: docker/build-push-action@v2
@@ -56,7 +56,7 @@ jobs:
         context: ./broadcaster
         file: ./broadcaster/Dockerfile
         push: true
-        tags: ${{ IMAGE_BROADCASTER }}
+        tags: ${{ env.IMAGE_BROADCASTER }}
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
