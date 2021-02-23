@@ -4,10 +4,10 @@ on:
   push:
 
 env:
-  IMAGE_SERVER: ${{ secrets.DOCKERHUB_USERNAME }}/project-server:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
-  IMAGE_BROADCASTER: ${{ secrets.DOCKERHUB_USERNAME }}/project-broadcaster:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
-  IMAGE_CLIENT: ${{ secrets.DOCKERHUB_USERNAME }}/project-client:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
-  IMAGE_CRONJOB: ${{ secrets.DOCKERHUB_USERNAME }}/project-cronjob:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+  IMAGE_SERVER: "${{ secrets.DOCKERHUB_USERNAME }}/project-server:${ ${{ env.GITHUB_REF }}#refs/heads/}-${{ env.GITHUB_SHA }}"
+  IMAGE_BROADCASTER: "${{ secrets.DOCKERHUB_USERNAME }}/project-broadcaster:${ ${{ env.GITHUB_REF }}#refs/heads/}-${{ env.GITHUB_SHA }}"
+  IMAGE_CLIENT: "${{ secrets.DOCKERHUB_USERNAME }}/project-client:${ ${{ env.GITHUB_REF }}#refs/heads/}-${{ env.GITHUB_SHA }}"
+  IMAGE_CRONJOB: "${{ secrets.DOCKERHUB_USERNAME }}/project-cronjob:${ ${{ env.GITHUB_REF }}#refs/heads/}-${{ env.GITHUB_SHA }}"
 
 jobs:
   build-1:
