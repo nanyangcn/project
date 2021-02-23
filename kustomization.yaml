@@ -8,15 +8,11 @@ resources:
 - manifests/server-service.yaml
 - manifests/broadcaster.yaml
 - manifests/rollout.yaml
-- manifests/ingress.yaml
+# - manifests/ingress.yaml
 - manifests/cronjob.yaml
 - manifests/analysistemplate.yaml
 images:
-- name: PROJECT/BROADCASTER
-  newName: nanyangcn/project-broadcaster
-- name: PROJECT/CLIENT
-  newName: nanyangcn/project-client
-- name: PROJECT/CRONJOB
+- name: PROJECT/IMAGE_CRONJOB
   newName: gcr.io/dwk-gke-2021/project-cronjob
   newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
 - name: PROJECT/IMAGE_BROADCASTER
@@ -28,6 +24,4 @@ images:
 - name: PROJECT/IMAGE_SERVER
   newName: gcr.io/dwk-gke-2021/project-server
   newTag: master-187bae68bdfd4e781ebaa2207bc602561bda89d8
-- name: PROJECT/SERVER
-  newName: nanyangcn/project-server
 namespace: project-master

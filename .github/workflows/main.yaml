@@ -3,41 +3,67 @@ name: Release application
 on:
   push:
 
-env:
-  GKE_CLUSTER: dwk-cluster
-  GKE_ZONE: europe-north1-a
-
 jobs:
-  build-publish-deploy:
-    name: Build, Publish and Deploy
+  build:
+    name: Build, Publish
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-      with:
-        service_account_key: ${{ secrets.GKE_SA_KEY }}
-        project_id: ${{ secrets.GKE_PROJECT }}
-    - run: gcloud --quiet auth configure-docker
-    - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
     - name: Create image name and tag
       run: |
-        echo "IMAGE_SERVER=gcr.io/${{ secrets.GKE_PROJECT }}/project-server:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
-        echo "IMAGE_CLIENT=gcr.io/${{ secrets.GKE_PROJECT }}/project-client:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
-        echo "IMAGE_CRONJOB=gcr.io/${{ secrets.GKE_PROJECT }}/project-cronjob:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
-        echo "IMAGE_BROADCASTER=gcr.io/${{ secrets.GKE_PROJECT }}/project-broadcaster:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
-    - name: Build
-      run: |
-        docker build --tag "$IMAGE_SERVER" ./server
-        docker build --tag "$IMAGE_CLIENT" ./client
-        docker build --tag "$IMAGE_CRONJOB" ./cronjob
-        docker build --tag "$IMAGE_BROADCASTER" ./broadcaster
-    - name: Publish
-      run: |
-        docker push "$IMAGE_SERVER"
-        docker push "$IMAGE_CLIENT"
-        docker push "$IMAGE_CRONJOB"
-        docker push "$IMAGE_BROADCASTER"
+        echo "IMAGE_SERVER=${{ secrets.DOCKERHUB_USERNAME }}/project-server:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
+        echo "IMAGE_CLIENT=${{ secrets.DOCKERHUB_USERNAME }}/project-client:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
+        echo "IMAGE_CRONJOB=${{ secrets.DOCKERHUB_USERNAME }}/project-cronjob:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
+        echo "IMAGE_BROADCASTER=${{ secrets.DOCKERHUB_USERNAME }}/project-broadcaster:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Server - Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./server
+        file: ./server/Dockerfile
+        push: true
+        tags: ${{ IMAGE_SERVER }}
+    - name: Client - Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./client
+        file: ./client/Dockerfile
+        push: true
+        tags: ${{ IMAGE_CLIENT }}
+    - name: Cronjob - Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./cronjob
+        file: ./cronjob/Dockerfile
+        push: true
+        tags: ${{ IMAGE_CRONJOB }}
+    - name: Broadcaster - Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./broadcaster
+        file: ./broadcaster/Dockerfile
+        push: true
+        tags: ${{ IMAGE_BROADCASTER }}
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Set up Kustomize
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
@@ -47,9 +73,7 @@ jobs:
         kubectl create namespace project-${GITHUB_REF#refs/heads/} || true
         kubectl config set-context --current --namespace=project-${GITHUB_REF#refs/heads/}
         ./kustomize edit set namespace project-${GITHUB_REF#refs/heads/}
-        ./kustomize edit set image PROJECT/IMAGE_BROADCASTER=$IMAGE_BROADCASTER PROJECT/IMAGE_SERVER=$IMAGE_SERVER PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT PROJECT/CRONJOB=$IMAGE_CRONJOB
-      # kubectl apply -k .
-      # kubectl rollout status deployment project-broadcaster
+        ./kustomize edit set image PROJECT/IMAGE_BROADCASTER=$IMAGE_BROADCASTER PROJECT/IMAGE_SERVER=$IMAGE_SERVER PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT PROJECT/IMAGE_CRONJOB=$IMAGE_CRONJOB
     - name: Commit and push
       uses: EndBug/add-and-commit@v5
       with:

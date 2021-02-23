@@ -11,5 +11,5 @@ spec:
         spec:
           containers:
           - name: project-cronjob
-            image: PROJECT/CRONJOB
+            image: PROJECT/IMAGE_CRONJOB
           restartPolicy: Never
