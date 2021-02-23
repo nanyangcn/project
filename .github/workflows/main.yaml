@@ -4,10 +4,10 @@ on:
   push:
 
 env:
-  IMAGE_SERVER: "${{ secrets.DOCKERHUB_USERNAME }}/project-server:${ ${{ env.GITHUB_REF }}#refs/heads/}-${{ env.GITHUB_SHA }}"
-  IMAGE_BROADCASTER: "${{ secrets.DOCKERHUB_USERNAME }}/project-broadcaster:${ ${{ env.GITHUB_REF }}#refs/heads/}-${{ env.GITHUB_SHA }}"
-  IMAGE_CLIENT: "${{ secrets.DOCKERHUB_USERNAME }}/project-client:${ ${{ env.GITHUB_REF }}#refs/heads/}-${{ env.GITHUB_SHA }}"
-  IMAGE_CRONJOB: "${{ secrets.DOCKERHUB_USERNAME }}/project-cronjob:${ ${{ env.GITHUB_REF }}#refs/heads/}-${{ env.GITHUB_SHA }}"
+  IMAGE_SERVER: ${{ secrets.DOCKERHUB_USERNAME }}/project-server
+  IMAGE_BROADCASTER: ${{ secrets.DOCKERHUB_USERNAME }}/project-broadcaster
+  IMAGE_CLIENT: ${{ secrets.DOCKERHUB_USERNAME }}/project-client
+  IMAGE_CRONJOB: ${{ secrets.DOCKERHUB_USERNAME }}/project-cronjob
 
 jobs:
   build-1:
@@ -105,6 +105,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Create image tag
+      run: |
+        echo "IMAGE_TAG=${GITHUB_REF#refs/heads/}-$GITHUB_SHA" >> $GITHUB_ENV
     - name: Set up Kustomize
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
@@ -112,7 +115,11 @@ jobs:
     - name: Deploy
       run: |-
         ./kustomize edit set namespace project-${GITHUB_REF#refs/heads/}
-        ./kustomize edit set image PROJECT/IMAGE_BROADCASTER=$IMAGE_BROADCASTER PROJECT/IMAGE_SERVER=$IMAGE_SERVER PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT PROJECT/IMAGE_CRONJOB=$IMAGE_CRONJOB
+        ./kustomize edit set image \
+          PROJECT/IMAGE_BROADCASTER=$IMAGE_BROADCASTER:$IMAGE_TAG \
+          PROJECT/IMAGE_SERVER=$IMAGE_SERVER:$IMAGE_TAG \
+          PROJECT/IMAGE_CLIENT=$IMAGE_CLIENT:$IMAGE_TAG \
+          PROJECT/IMAGE_CRONJOB=$IMAGE_CRONJOB:$IMAGE_TAG
     - name: Commit and push
       uses: EndBug/add-and-commit@v5
       with:
