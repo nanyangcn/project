@@ -14,14 +14,14 @@ resources:
 images:
 - name: PROJECT/IMAGE_BROADCASTER
   newName: nanyangcn/project-broadcaster
-  newTag: master-807c2bd842c548aff86dbb2f68a2b9a29f2f562f
+  newTag: master-fea1c88aa20e4a18c77faf1eac5f9c2a2a8082b1
 - name: PROJECT/IMAGE_CLIENT
   newName: nanyangcn/project-client
-  newTag: master-807c2bd842c548aff86dbb2f68a2b9a29f2f562f
+  newTag: master-fea1c88aa20e4a18c77faf1eac5f9c2a2a8082b1
 - name: PROJECT/IMAGE_CRONJOB
   newName: nanyangcn/project-cronjob
-  newTag: master-807c2bd842c548aff86dbb2f68a2b9a29f2f562f
+  newTag: master-fea1c88aa20e4a18c77faf1eac5f9c2a2a8082b1
 - name: PROJECT/IMAGE_SERVER
   newName: nanyangcn/project-server
-  newTag: master-807c2bd842c548aff86dbb2f68a2b9a29f2f562f
+  newTag: master-fea1c88aa20e4a18c77faf1eac5f9c2a2a8082b1
 namespace: project-master
