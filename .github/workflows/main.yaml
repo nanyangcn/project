@@ -34,7 +34,7 @@ jobs:
         context: ./server
         file: ./server/Dockerfile
         push: true
-        tags: ${{ env.IMAGE_SERVER }}:${{ IMAGE_TAG }}
+        tags: ${{ env.IMAGE_SERVER }}:${{ env.IMAGE_TAG }}
   build-2:
     name: Broadcaster - Build, Publish
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
         context: ./broadcaster
         file: ./broadcaster/Dockerfile
         push: true
-        tags: ${{ env.IMAGE_BROADCASTER }}:${{ IMAGE_TAG }}
+        tags: ${{ env.IMAGE_BROADCASTER }}:${{ env.IMAGE_TAG }}
   build-3:
     name: Client - Build, Publish
     runs-on: ubuntu-latest
@@ -84,7 +84,7 @@ jobs:
         context: ./client
         file: ./client/Dockerfile
         push: true
-        tags: ${{ env.IMAGE_CLIENT }}:${{ IMAGE_TAG }}
+        tags: ${{ env.IMAGE_CLIENT }}:${{ env.IMAGE_TAG }}
   build-4:
     name: Cronjob - Build, Publish
     runs-on: ubuntu-latest
@@ -109,7 +109,7 @@ jobs:
         context: ./cronjob
         file: ./cronjob/Dockerfile
         push: true
-        tags: ${{ env.IMAGE_CRONJOB }}:${{ IMAGE_TAG }}
+        tags: ${{ env.IMAGE_CRONJOB }}:${{ env.IMAGE_TAG }}
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
