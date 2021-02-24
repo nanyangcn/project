@@ -6,10 +6,10 @@ metadata:
 spec:
   metrics:
   - name: cpu-usage-rate
-    successCondition: result < 3
+    successCondition: result < 8
     provider:
       prometheus:
-        address: http://kube-prometheus-stack-1612-prometheus.prometheus.svc.cluster.local:9090
+        address: http://kube-prometheus-stack-1614-prometheus.prometheus.svc.cluster.local:9090
         query: |
           scalar(
             sum(rate(container_cpu_usage_seconds_total{namespace="project-master"}[10m]) * 100)
