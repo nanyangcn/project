@@ -4,7 +4,7 @@ metadata:
   namespace: project-master
   name: project-server-svc
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: project
   ports:
