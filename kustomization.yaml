@@ -1,27 +1,27 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+# - manifests/ingress.yaml
+# - manifests/rollout.yaml
 resources:
 - manifests/deployment.yaml
-# - manifests/ingress.yaml
 - manifests/db-sealedsecret.yaml
 - manifests/db-statefulset.yaml
 - manifests/client-service.yaml
 - manifests/server-service.yaml
 - manifests/broadcaster.yaml
-# - manifests/rollout.yaml
 - manifests/cronjob.yaml
 - manifests/analysistemplate.yaml
 images:
 - name: PROJECT/IMAGE_BROADCASTER
   newName: nanyangcn/project-broadcaster
-  newTag: master-c36478f911ae313d5963ba68f0f686c65b3f8bb2
+  newTag: master-b0b56d79877b2e0685d636df15e644c3d8994fc8
 - name: PROJECT/IMAGE_CLIENT
   newName: nanyangcn/project-client
-  newTag: master-c36478f911ae313d5963ba68f0f686c65b3f8bb2
+  newTag: master-b0b56d79877b2e0685d636df15e644c3d8994fc8
 - name: PROJECT/IMAGE_CRONJOB
   newName: nanyangcn/project-cronjob
-  newTag: master-c36478f911ae313d5963ba68f0f686c65b3f8bb2
+  newTag: master-b0b56d79877b2e0685d636df15e644c3d8994fc8
 - name: PROJECT/IMAGE_SERVER
   newName: nanyangcn/project-server
-  newTag: master-c36478f911ae313d5963ba68f0f686c65b3f8bb2
+  newTag: master-b0b56d79877b2e0685d636df15e644c3d8994fc8
 namespace: project-master
