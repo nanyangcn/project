@@ -4,7 +4,7 @@ metadata:
   namespace: project-master
   name: project-broadcaster-dep
 spec:
-  replicas: 6 
+  replicas: 2 
   selector:
     matchLabels:
       app: project
@@ -18,8 +18,8 @@ spec:
           image: PROJECT/IMAGE_BROADCASTER
           resources:
             limits:
-              cpu: "50m"
-              memory: "200Mi"
+              cpu: "30m"
+              memory: "50Mi"
           envFrom:
           - secretRef:
               name: project-db-secret
