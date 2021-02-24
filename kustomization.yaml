@@ -4,7 +4,7 @@ kind: Kustomization
 # - manifests/deployment.yaml
 resources:
 - manifests/rollout.yaml
-- manifests/db-sealedsecret.yaml
+# - manifests/db-sealedsecret.yaml
 - manifests/db-statefulset.yaml
 - manifests/client-service.yaml
 - manifests/server-service.yaml
